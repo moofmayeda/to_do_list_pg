@@ -1,12 +1,12 @@
 require 'pg'
-
+require 'pry'
 class List
   attr_accessor :name
   attr_reader :id
 
   def initialize name, id = nil
     @name = name
-    @id = id
+    @id = id.to_i
   end
 
   def self.all
@@ -18,6 +18,11 @@ class List
       lists << List.new(name, id)
     end
     lists
+  end
+
+  def self.find id
+    result = DB.exec("SELECT * FROM lists WHERE id = #{id};").first
+    List.new(result['name'], result['id'])
   end
 
   def save

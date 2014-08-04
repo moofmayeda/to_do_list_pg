@@ -23,6 +23,17 @@ describe 'List' do
     end
   end
 
+  describe '.find' do
+    it 'finds a list by ID' do
+      new_list = List.new('pull weeds')
+      new_list.save
+      id = new_list.id
+      test = List.find(id)
+      p test
+      expect(test).to eq new_list
+    end
+  end
+
   describe '==' do
     it "sets two lists as equal if they have the same name" do
       new_list1 = List.new('pull weeds')
