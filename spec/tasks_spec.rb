@@ -1,14 +1,4 @@
-require 'rspec'
-require 'pry'
-require 'tasks'
-
-DB = PG.connect({:dbname => 'test_todo'})
-
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM tasks *;")
-  end
-end
+require 'todo_spec'
 
 describe 'Task' do
   describe 'initialize' do

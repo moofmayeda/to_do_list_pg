@@ -1,19 +1,9 @@
-require 'rspec'
-require 'pry'
-require 'lists'
-
-DB = PG.connect({:dbname => 'test_todo'})
-
-RSpec.configure do |config|
-  config.after(:each) do
-    DB.exec("DELETE FROM lists *;")
-  end
-end
+require 'todo_spec'
 
 describe 'List' do
   describe 'initialize' do
-    it 'initializes a new task with a name' do
-      new_list = List.new('pull weeds')
+    it 'can be initialized with its name and database ID' do
+      new_list = List.new('pull weeds', 1)
       expect(new_list).to be_an_instance_of List
       expect(new_list.name).to eq 'pull weeds'
     end
