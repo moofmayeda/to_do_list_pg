@@ -82,4 +82,21 @@ describe 'Task' do
       expect(new_task.done).to eq true
     end
   end
+
+  describe 'sort_by_date' do
+    it 'finds all tasks in a list and sorts them by date' do
+      new_task1 = Task.new('pull weeds', 2)
+      new_task1.save
+      new_task1.edit_date('2014-08-31')
+      new_task2 = Task.new('water plants', 2)
+      new_task2.save
+      new_task2.edit_date('2014-08-30')
+      new_task3 = Task.new('dig hole', 2)
+      new_task3.save
+      new_task3.edit_date('2014-07-31')
+      new_task4 = Task.new('trim tree', 3)
+      new_task4.save
+      expect(Task.sort_by_date(2)).to eq [new_task3, new_task2, new_task1]
+    end
+  end
 end

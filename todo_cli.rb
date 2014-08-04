@@ -56,16 +56,33 @@ def add_task list_id
   when 'M'
     main_menu
   else
-    puts "Press r to remove the task"
-    puts "Press d to add a due date"
+    task_query = Task.select(response.to_i)
+    view_task(task_query)
+  end
+end
+
+def view_task task_query
+  welcome
+  task_id = task_query.id
+  puts task_query.id.to_s + " " + task_query.name
+  puts "Due Date: " + task_query.due_date.to_s
+  puts "Completed: " + task_query.done.to_s
+  ws
+  puts "Press r to remove the task"
+  puts "Press d to add a due date"
+  puts "Press c to mark a task 'completed'"
     choice = gets.chomp.upcase
       case choice
       when 'R'
-        Task.delete(Task.select(response))
+        Task.delete(task_query)
+        add_task(task_query.list_id)
       when 'D'
-        puts "We don't really have an edit task..."
+        puts "Enter due date (YEAR-MN-DY):"
+        task_query.edit_date(gets.chomp)
+      when 'C'
+        task_query.mark_done
       end
-  end
+  add_task(task_query.list_id)
 end
 
 def main_menu
