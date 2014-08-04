@@ -35,9 +35,15 @@ describe 'List' do
 
   describe '==' do
     it "sets two lists as equal if they have the same name" do
-      new_list1 = Task.new('pull weeds')
-      new_list2 = Task.new('pull weeds')
+      new_list1 = List.new('pull weeds')
+      new_list2 = List.new('pull weeds')
       expect(new_list1).to eq new_list2
     end
+  end
+
+  it "sets its ID when you save it" do
+    list = List.new('gardening')
+    list.save
+    expect(list.id).to be_an_instance_of Fixnum
   end
 end
