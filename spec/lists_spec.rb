@@ -32,6 +32,21 @@ describe 'List' do
     end
   end
 
+  describe '.delete' do
+    it 'deletes a list and its tasks' do
+      new_list = List.new('very important do not delete')
+      new_list.save
+      list_id = new_list.id
+      new_task = Task.new('secret caman island number', list_id)
+      new_task.save
+      new_task1 = Task.new('secret swiss bank number', list_id)
+      new_task1.save
+      List.delete(list_id)
+      expect(List.all).to eq []
+      expect(Task.find(list_id)).to eq []
+    end
+  end
+
   describe '==' do
     it "sets two lists as equal if they have the same name" do
       new_list1 = List.new('pull weeds')
