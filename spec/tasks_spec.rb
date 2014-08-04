@@ -45,12 +45,41 @@ describe 'Task' do
     end
   end
 
+  describe '.select' do
+    it "selects a task by its ID number" do
+      new_task1 = Task.new('pull weeds', 1)
+      new_task1.save
+      new_task2 = Task.new('water plants', 2)
+      new_task2.save
+      id = new_task1.id
+      expect(Task.select(id)).to eq new_task1
+    end
+  end
+
   describe '.delete' do
     it 'deletes a given task from the database' do
       new_task = Task.new('pull weeds', 1)
       new_task.save
       Task.delete(new_task)
       expect(Task.all).to eq []
+    end
+  end
+
+  describe 'edit_date' do
+    it 'lets you edit the due date' do
+      new_task = Task.new('scrub gulfstream jet', 1)
+      new_task.save
+      new_task.edit_date('2014-08-20')
+      expect(new_task.due_date).to eq '2014-08-20'
+    end
+  end
+
+  describe 'mark_done' do
+    it 'lets you mark the task as done' do
+      new_task = Task.new('scrub gulfstream jet', 1)
+      new_task.save
+      new_task.mark_done
+      expect(new_task.done).to eq true
     end
   end
 end
