@@ -45,6 +45,8 @@ describe 'Task' do
     end
   end
 
+
+
   describe '.select' do
     it "selects a task by its ID number" do
       new_task1 = Task.new('pull weeds', 1)
@@ -53,6 +55,23 @@ describe 'Task' do
       new_task2.save
       id = new_task1.id
       expect(Task.select(id)).to eq new_task1
+    end
+  end
+
+  describe '.find_completed' do
+    it 'finds completed tasks' do
+      new_task1 = Task.new('pull weeds', 2)
+      new_task1.save
+      new_task1.mark_done
+      new_task2 = Task.new('water plants', 2)
+      new_task2.save
+      new_task2.mark_done
+      new_task3 = Task.new('dig hole', 1)
+      new_task3.save
+      new_task3.mark_done
+      new_task4 = Task.new('trim tree', 3)
+      new_task4.save
+      expect(Task.find_completed(2)).to eq [new_task1, new_task2]
     end
   end
 
@@ -83,7 +102,7 @@ describe 'Task' do
     end
   end
 
-  describe 'sort_by_date' do
+  describe '.sort_by_date' do
     it 'finds all tasks in a list and sorts them by date' do
       new_task1 = Task.new('pull weeds', 2)
       new_task1.save

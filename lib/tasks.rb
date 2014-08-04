@@ -40,6 +40,20 @@ class Task
     tasks
   end
 
+  def self.find_completed(number)
+    tasks = []
+    results = DB.exec("SELECT * FROM tasks WHERE list_id = #{number} AND done = true;")
+    results.each do |result|
+      name = result['name']
+      due_date = result['due_date']
+      list_id = result['list_id'].to_i
+      done = result['done']
+      id = result['id']
+      tasks << Task.new(name, list_id, id)
+    end
+    tasks
+  end
+
    def self.sort_by_date(number)
     tasks = []
     results = DB.exec("SELECT * FROM tasks WHERE list_id = #{number} ORDER BY due_date ASC;")
