@@ -30,8 +30,16 @@ def create_list
 end
 
 def list_detail
+  lists
   puts "Enter the number of the list to view:"
+  list_num = gets.chomp.to_i
 
+  list_query = List.find(list_num)
+  view_list(list_query)
+end
+
+def view_list list_query
+  puts list_query.id.to_s + " " + list_query.name
 end
 
 

@@ -21,6 +21,19 @@ class Task
     tasks
   end
 
+  def self.find(number)
+    tasks = []
+    results = DB.exec("SELECT * FROM tasks WHERE list_id = #{number};")
+    results.each do |result|
+      name = result['name']
+      due_date = result['due_date']
+      list_id = result['list_id'].to_i
+      done = result['done']
+      tasks << Task.new(name, list_id)
+    end
+    tasks
+  end
+
   def save
     DB.exec("INSERT INTO tasks (name, list_id) VALUES ('#{name}', #{list_id});")
   end

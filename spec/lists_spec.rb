@@ -28,9 +28,7 @@ describe 'List' do
       new_list = List.new('pull weeds')
       new_list.save
       id = new_list.id
-      test = List.find(id)
-      p test
-      expect(test).to eq new_list
+      expect(List.find(id)).to eq new_list
     end
   end
 
