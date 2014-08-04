@@ -93,6 +93,15 @@ describe 'Task' do
     end
   end
 
+  describe 'edit_name' do
+    it 'lets you edit the task name' do
+      new_task = Task.new('scrub gulfstream jet', 1)
+      new_task.save
+      new_task.edit_name('scrub the bentley')
+      expect(new_task.name).to eq 'scrub the bentley'
+    end
+  end
+
   describe 'mark_done' do
     it 'lets you mark the task as done' do
       new_task = Task.new('scrub gulfstream jet', 1)

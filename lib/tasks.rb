@@ -95,4 +95,9 @@ class Task
     DB.exec("UPDATE tasks SET done = true WHERE id = #{id};")
     @done = true
   end
+
+  def edit_name(new_name)
+    DB.exec("UPDATE tasks SET name = '#{new_name}' WHERE id = #{id};")
+    @name = new_name
+  end
 end
