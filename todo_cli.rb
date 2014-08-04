@@ -24,38 +24,53 @@ def lists
 end
 
 def create_list
+  welcome
   puts "Enter the name of the list"
   List.new(gets.chomp).save
   main_menu
 end
 
-def list_detail
-  lists
-  puts "Enter the number of the list to view:"
-  list_num = gets.chomp.to_i
-
-  list_query = List.find(list_num)
-  view_list(list_query)
-end
-
 def view_list list_query
+  welcome
+  list_id = list_query.id
   puts list_query.id.to_s + " " + list_query.name
+  ws
+  puts "Tasks:"
+
+  Task.find(list_query.id).each do |task|
+    puts task.name
+  end
+  add_task(list_id)
 end
 
+def add_task list_id
+  puts "Press n to add a new task to this list"
+  puts "M > Main Menu"
+  case gets.chomp.upcase
+  when 'N'
+    puts "Enter the task"
+    Task.new(gets.chomp, list_id).save
+    add_task(list_id)
+  when 'M'
+    main_menu
+  end
+end
 
 def main_menu
   welcome
   lists
-  puts "1 - Create a new list"
-  puts "2 - Edit or search an existing list"
-  puts "3 - exit"
-  case gets.chomp.to_i
-  when 1
+  puts "N - Create a new list"
+  puts "X - Exit"
+  puts "Or enter the number of a list to modify it:"
+  response = gets.chomp.upcase
+  case response
+  when 'N'
     create_list
-  when 2
-    list_detail
-  when 3
+  when 'X'
     exit
+  else
+    list_query = List.find(response.to_i)
+    view_list(list_query)
   end
 
 end

@@ -44,4 +44,13 @@ describe 'Task' do
       expect(Task.find(2)).to eq [new_task2, new_task3]
     end
   end
+
+  describe '.delete' do
+    it 'deletes a given task from the database' do
+      new_task = Task.new('pull weeds', 1)
+      new_task.save
+      Task.delete(new_task)
+      expect(Task.all).to eq []
+    end
+  end
 end
